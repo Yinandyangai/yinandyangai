@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Fonts ──────────────────────────────────────────────────────────────── */
+/* Fraunces (serif display) and Geist (sans body) loaded from Google Fonts.
+   We use Fraunces because it's a beautiful, characterful serif with optical
+   sizing — far from a generic AI default. */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+
+/* ── CSS variables — the duality palette ─────────────────────────────────── */
+:root {
+  --paper: #fafaf7;
+  --paper-dim: #f2f1ec;
+  --paper-edge: #e8e6df;
+
+  --ink: #0a0a0a;
+  --ink-soft: #1f1f1d;
+  --ink-mute: #5a5a56;
+  --ink-faint: #8c8c86;
+
+  --ochre: #b8893a;
+  --ochre-deep: #8e6826;
+  --ochre-glow: #e5c77b;
+
+  --steel: #5b6b7a;
+  --steel-deep: #384654;
+}
+
+/* Dark mode (used inside the (app) shell on certain screens for contrast).
+   The duality is literal — both modes coexist in the product. */
+.theme-night {
+  --paper: #0a0a0a;
+  --paper-dim: #141413;
+  --paper-edge: #2a2a26;
+  --ink: #fafaf7;
+  --ink-soft: #e6e5df;
+  --ink-mute: #a4a39d;
+  --ink-faint: #6c6c66;
+}
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  /* Display type uses Fraunces with deliberate optical sizing. */
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+    font-feature-settings: "ss01";
+    letter-spacing: -0.015em;
+  }
+
+  /* Selection in the brand accent */
+  ::selection {
+    background: var(--ochre-glow);
+    color: var(--ink);
+  }
+
+  /* Subtle paper grain on body for atmosphere — extremely understated */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(
+        circle at 1px 1px,
+        rgba(0, 0, 0, 0.018) 1px,
+        transparent 0
+      );
+    background-size: 6px 6px;
+    z-index: 0;
+  }
+
+  main,
+  header,
+  footer {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* ── Utilities ───────────────────────────────────────────────────────────── */
+@layer utilities {
+  .rule {
+    border-top: 1px solid var(--paper-edge);
+  }
+
+  /* "Editorial" small-caps eyebrow */
+  .eyebrow {
+    font-family: "Geist", sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+  }
+
+  /* Quiet pulsing dot — used near "live" indicators */
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--ochre);
+    box-shadow: 0 0 0 0 rgba(184, 137, 58, 0.6);
+    animation: pulse 2.4s ease-out infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(184, 137, 58, 0); }
+  50% { box-shadow: 0 0 0 6px rgba(184, 137, 58, 0); transform: scale(1.06); }
+}
