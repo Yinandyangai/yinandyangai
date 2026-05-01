@@ -19,7 +19,7 @@ export function serverSupabase() {
   const cookieStore = cookies();
   return createServerClient(url, key, {
     cookies: {
-      get: (name) => cookieStore.get(name)?.value,
+      get: (name: string) => cookieStore.get(name)?.value,
       set: () => {},
       remove: () => {},
     },
